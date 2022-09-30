@@ -1,6 +1,73 @@
 #messages {
-  background-color: lightblue;
-  width: 500px;
-  height: 500px;
+  background-image: url(../../public/background.jpg);
+  height: 93vh;
   overflow: auto;
+  margin-left: auto;
+  margin-top: auto;
+}
+
+#input-message textarea {
+  border-radius: 5px;
+  margin-left: 10px;
+  margin: auto;
+  height: 40px;
+}
+
+#message {
+  border-radius: 10px;
+  border: none;
+  background-color: #e2dfdf;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.my-message p {
+  background-color: #eeeeee;
+  margin: 10px;
+  height: fit-content;
+  width: fit-content;
+  max-width: 80%;
+  padding: 10px;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+.your-message p {
+  background-color: skyblue;
+  margin: 10px;
+  height: fit-content;
+  width: fit-content;
+  padding: 10px;
+  border-radius: 10px;
+  margin-right: auto;
+  margin-left: 20px;
+  max-width: 80%;
+}
+
+#user {
+  margin: auto;
+}
+#input-message {
+  margin: auto;
+  margin-right: auto;
+}
+
+#root {
+  background-color: #f2f2f2;
+}
+
+#user div {
+  width: 100%;
+  font-size: large;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  margin-right: 20px;
 }

@@ -12,6 +12,7 @@ export class Home extends React.Component<any, any> {
     super(props);
     this.state = {
       socket: "",
+      userId: "",
     };
   }
 
@@ -24,11 +25,36 @@ export class Home extends React.Component<any, any> {
     const socket = this.setupSocket();
 
     socket.on("receive_message", (message: any) => {
-      $("#messages").append(`<div>${message}</div>`);
+      this.renderMessage(message, false);
+      $("#messages").animate({ scrollTop: 20000000 }, "slow");
     });
 
-    this.getUsers().then(() => this.getMessage());
+    this.getUsers().then((users) => {
+      if (users.length > 0) {
+        this.getMessage(users[0].id);
+      }
+    });
     this.setState({ socket: socket });
+  }
+
+  async getMe() {
+    const response = await CallApi(
+      `${API_URL}/api/user/v1/me`,
+      METHOD.Get,
+      undefined,
+      Cookies.get("access_token")
+    );
+    if (response.status !== 200) {
+      await Swal.fire({
+        title: response.data.error_message,
+        icon: "error",
+        timer: 1000,
+      });
+      Cookies.remove("access_token");
+      return (window.location.href = "/");
+    }
+    const user = response.data;
+    return user;
   }
 
   setupSocket() {
@@ -52,18 +78,28 @@ export class Home extends React.Component<any, any> {
     return socket;
   }
 
+  renderMessage(message: string, myMessage: boolean) {
+    if (myMessage) {
+      $("#messages").append(`<div class="my-message"><p>${message}</p></div>`);
+    } else {
+      $("#messages").append(
+        `<div class="your-message"><p>${message}</p></div>`
+      );
+    }
+  }
+
   send() {
     const socket: Socket = this.state.socket;
     const body = {
-      to: $("input[name=user]:checked", "#user").val(),
-      content: $("#message").val(),
+      to: this.state.userId,
+      content: $("#message").val()?.toString(),
     };
     if (!body.content || !body.to) {
       return;
     }
-    $("#message").val("");
     socket.emit("private", body);
-    $("#messages").append(`<div>${body.content}</div>`);
+    $("#message").val("");
+    this.renderMessage(body.content, true);
     $("#messages").animate({ scrollTop: 20000000 }, "slow");
   }
 
@@ -84,30 +120,27 @@ export class Home extends React.Component<any, any> {
       return (window.location.href = "/");
     }
     const users = response.data;
-    let first = false;
+    $("user").text("");
     for (let user of users) {
-      if (!first) {
-        first = true;
-        $("#user").append(
-          `<input type="radio" name="user" id=${user.id} value=${user.id} checked>
-                <label for=${user.id}>${user.name}</label>`
-        );
-      } else {
-        $("#user").append(
-          `<input type="radio" name="user" id=${user.id} value=${user.id} >
-        <label for=${user.id}>${user.name}</label>`
+      $("#user").append(`<div id=${user.id}></div>`);
+      if (!user.avatarUrl) {
+        $(`#${user.id}`).append(
+          `<img class="avatar" src="../../avatar.png" alt="avatar" />`
         );
       }
+      $(`#${user.id}`).append(user.name);
+      $(`#${user.id}`).on("click", () => {
+        this.getMessage(user.id);
+      });
     }
+    return users;
   }
 
-  async getMessage() {
+  async getMessage(id: string) {
     $("#messages").text("");
+    this.setState({ userId: id });
     const response = await CallApi(
-      `${API_URL}/api/v1/message/id/${$(
-        "input[name=user]:checked",
-        "#user"
-      ).val()}`,
+      `${API_URL}/api/v1/message/id/${id}`,
       METHOD.Get,
       undefined,
       Cookies.get("access_token")
@@ -121,33 +154,37 @@ export class Home extends React.Component<any, any> {
       return;
     }
     const messages = response.data;
-    for (const message of messages) {
-      $("#messages").append(`<div>${message.data}</div>`);
-    }
+    const user = await this.getMe();
+    messages.map((message: any) => {
+      return this.renderMessage(message.data, message.send_user_id === user.id);
+    });
     $("#messages").animate({ scrollTop: 20000000 }, "slow");
   }
 
   render(): React.ReactNode {
     return (
-      <div>
-        <div
-          id="user"
-          onClick={() => {
-            this.getMessage();
-          }}
-        ></div>
-        <div id="messages"></div>
-        <div>
-          <input
-            type="text"
-            id="message"
-            onKeyDown={(event) => {
-              if (event.key === "Enter") {
-                this.send();
-              }
-            }}
-          />
-          <input type="button" value="Send" onClick={() => this.send()} />
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-3">
+            <div id="user"></div>
+          </div>
+          <div className="col">
+            <div id="messages"></div>
+            <div id="input-message">
+              <textarea
+                name="message"
+                id="message"
+                autoComplete="off"
+                rows={1}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    event.preventDefault();
+                    this.send();
+                  }
+                }}
+              ></textarea>
+            </div>
+          </div>
         </div>
       </div>
     );

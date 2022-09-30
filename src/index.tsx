@@ -4,6 +4,7 @@ import { Home } from "./pages/home";
 import { Login } from "./pages/login";
 import "./css/index.css";
 import { Register } from "./pages/register";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function App() {
   return (
