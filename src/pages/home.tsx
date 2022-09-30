@@ -7,7 +7,31 @@ import { API_URL, CallApi, METHOD } from "../helpers/call-api";
 import Swal from "sweetalert2";
 import "../css/home.css";
 
-export class Home extends React.Component {
+export class Home extends React.Component<any, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      socket: "",
+    };
+  }
+
+  componentDidMount(): void {
+    document.title = "Home";
+
+    if (!Cookies.get("access_token")) {
+      window.location.href = "/login";
+    }
+    const socket = this.setupSocket();
+
+    socket.on("receive_message", (message: any) => {
+      $("#messages").append(`<div>${message}</div>`);
+    });
+
+    this.getUsers().then(() => this.getMessage());
+    $("#messages").animate({ scrollTop: 20000000 }, "slow");
+    this.setState({ socket: socket });
+  }
+
   setupSocket() {
     const socket = io(SOCKET_URL, {
       transportOptions: {
@@ -29,7 +53,8 @@ export class Home extends React.Component {
     return socket;
   }
 
-  send(socket: Socket) {
+  send() {
+    const socket: Socket = this.state.socket;
     const body = {
       to: $("input[name=user]:checked", "#user").val(),
       content: $("#message").val(),
@@ -102,18 +127,6 @@ export class Home extends React.Component {
   }
 
   render(): React.ReactNode {
-    if (!Cookies.get("access_token")) {
-      window.location.href = "/login";
-    }
-    const socket = this.setupSocket();
-
-    socket.on("receive_message", (message: any) => {
-      $("#messages").append(`<div>${message}</div>`);
-    });
-
-    this.getUsers().then(() => this.getMessage());
-    $("#messages").animate({ scrollTop: 20000000 }, "slow");
-
     return (
       <div>
         <div
@@ -129,11 +142,11 @@ export class Home extends React.Component {
             id="message"
             onKeyDown={(event) => {
               if (event.key === "Enter") {
-                this.send(socket);
+                this.send();
               }
             }}
           />
-          <input type="button" value="Send" onClick={() => this.send(socket)} />
+          <input type="button" value="Send" onClick={() => this.send()} />
         </div>
       </div>
     );

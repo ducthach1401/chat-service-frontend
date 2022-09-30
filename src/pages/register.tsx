@@ -5,6 +5,10 @@ import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 
 export class Register extends React.Component {
+  componentDidMount(): void {
+    document.title = "Register";
+  }
+
   async register() {
     if (
       !$("#name").val() ||

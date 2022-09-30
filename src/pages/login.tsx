@@ -5,6 +5,10 @@ import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 
 export class Login extends React.Component {
+  componentDidMount(): void {
+    document.title = "Login";
+  }
+
   async login() {
     const body = {
       username: $("#username").val(),
