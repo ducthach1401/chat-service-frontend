@@ -28,7 +28,6 @@ export class Home extends React.Component<any, any> {
     });
 
     this.getUsers().then(() => this.getMessage());
-    $("#messages").animate({ scrollTop: 20000000 }, "slow");
     this.setState({ socket: socket });
   }
 
@@ -65,6 +64,7 @@ export class Home extends React.Component<any, any> {
     $("#message").val("");
     socket.emit("private", body);
     $("#messages").append(`<div>${body.content}</div>`);
+    $("#messages").animate({ scrollTop: 20000000 }, "slow");
   }
 
   async getUsers() {
@@ -124,6 +124,7 @@ export class Home extends React.Component<any, any> {
     for (const message of messages) {
       $("#messages").append(`<div>${message.data}</div>`);
     }
+    $("#messages").animate({ scrollTop: 20000000 }, "slow");
   }
 
   render(): React.ReactNode {
