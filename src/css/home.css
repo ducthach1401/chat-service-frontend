@@ -10,7 +10,7 @@
   border-radius: 5px;
   margin-left: 10px;
   margin: auto;
-  height: 40px;
+  height: 6vh;
 }
 
 #message {
@@ -27,11 +27,13 @@
   margin: 10px;
   height: fit-content;
   width: fit-content;
-  max-width: 80%;
+  max-width: 70%;
   padding: 10px;
   border-radius: 10px;
   margin-left: auto;
   margin-right: 20px;
+  white-space: pre-line;
+  word-wrap: break-word;
 }
 
 .your-message p {
@@ -43,15 +45,14 @@
   border-radius: 10px;
   margin-right: auto;
   margin-left: 20px;
-  max-width: 80%;
+  max-width: 70%;
+  white-space: pre-line;
+  word-wrap: break-word;
 }
 
 #user {
-  margin: auto;
-}
-#input-message {
-  margin: auto;
-  margin-right: auto;
+  overflow: auto;
+  height: 99vh;
 }
 
 #root {
@@ -59,10 +60,13 @@
 }
 
 #user div {
-  width: 100%;
+  width: 90%;
   font-size: large;
   cursor: pointer;
   padding: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .avatar {

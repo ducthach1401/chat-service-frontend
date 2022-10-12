@@ -165,10 +165,10 @@ export class Home extends React.Component<any, any> {
     return (
       <div className="container-fluid">
         <div className="row">
-          <div className="col-3">
+          <div className="col-3 p-0">
             <div id="user"></div>
           </div>
-          <div className="col">
+          <div className="col-9 p-0">
             <div id="messages"></div>
             <div id="input-message">
               <textarea
