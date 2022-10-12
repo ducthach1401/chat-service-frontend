@@ -121,6 +121,10 @@ export class Home extends React.Component<any, any> {
     }
     socket.emit("private", body);
     $("#message").val("");
+
+    if ($("#empty").html()) {
+      $("#messages").html("");
+    }
   }
 
   async getUsers() {
@@ -185,6 +189,12 @@ export class Home extends React.Component<any, any> {
     }
     const messages = response.data;
     const user = await this.getMe();
+    if (messages.length < 1) {
+      $("#messages").append(
+        `<div id="empty"><img src="../../message.png" alt="empty" /> 
+        Bạn chưa có tin nhắn! \n Hãy bắt đầu trò chuyện vui vẻ. </div>`
+      );
+    }
     messages.map((message: any) => {
       return this.renderMessage(message.data, message.send_user_id === user.id);
     });

@@ -83,3 +83,20 @@
   right: 35px;
   top: 15px;
 }
+
+#empty {
+  position: relative;
+  top: 10%;
+  padding: 15px;
+  text-align: center;
+  margin: auto;
+  width: 40%;
+  height: fit-content;
+  border-radius: 20px;
+  background-color: snow;
+  white-space: pre-wrap;
+}
+
+#empty img {
+  width: 50px;
+}
