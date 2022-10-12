@@ -137,7 +137,17 @@ export class Home extends React.Component<any, any> {
           `<img class="avatar" src="../../avatar.png" alt="avatar" />`
         );
       }
-      $(`#${user.id}`).append(user.name);
+      if (user.is_online) {
+        $(`#${user.id}`).append(
+          `<img class="online" src="../../online.png" alt="online" />`
+        );
+      } else {
+        $(`#${user.id}`).append(
+          `<img class="online" src="../../offline.png" alt="online" />`
+        );
+      }
+
+      $(`#${user.id}`).append(`<span>${user.name}</span>`);
       $(`#${user.id}`).on("click", () => {
         this.getMessage(user.id);
       });
