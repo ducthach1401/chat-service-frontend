@@ -40,6 +40,17 @@ export class Home extends React.Component<any, any> {
       $("#messages").animate({ scrollTop: 20000000 }, "slow");
     });
 
+    socket.on("status", (message: any) => {
+      const check = document.getElementById(message.id);
+      if (check) {
+        if (message.is_online) {
+          $(`#${message.id} .online`).attr("src", "../../online.png");
+        } else {
+          $(`#${message.id} .online`).attr("src", "../../offline.png");
+        }
+      }
+    });
+
     this.getUsers().then((users) => {
       if (users.length > 0) {
         this.getMessage(users[0].id);
