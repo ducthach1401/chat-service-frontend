@@ -13,11 +13,15 @@ export class Home extends React.Component<any, any> {
     this.state = {
       socket: "",
       userId: "",
+      meId: "",
     };
   }
 
   componentDidMount(): void {
     document.title = "Home";
+    this.getMe().then((user) => {
+      this.setState({ meId: user.id });
+    });
 
     if (!Cookies.get("access_token")) {
       window.location.href = "/login";
@@ -25,7 +29,14 @@ export class Home extends React.Component<any, any> {
     const socket = this.setupSocket();
 
     socket.on("receive_message", (message: any) => {
-      this.renderMessage(message, false);
+      if (
+        (this.state.meId === message.send_user_id &&
+          this.state.userId === message.receive_user_id) ||
+        (this.state.userId === message.send_user_id &&
+          this.state.meId === message.receive_user_id)
+      ) {
+        this.renderMessage(message.data, message.is_me);
+      }
       $("#messages").animate({ scrollTop: 20000000 }, "slow");
     });
 
@@ -99,8 +110,6 @@ export class Home extends React.Component<any, any> {
     }
     socket.emit("private", body);
     $("#message").val("");
-    this.renderMessage(body.content, true);
-    $("#messages").animate({ scrollTop: 20000000 }, "slow");
   }
 
   async getUsers() {
@@ -140,7 +149,7 @@ export class Home extends React.Component<any, any> {
     $("#messages").text("");
     this.setState({ userId: id });
     const response = await CallApi(
-      `${API_URL}/api/v1/message/id/${id}`,
+      `${API_URL}/api/v1/message/id/${id}?page=1&limit=20`,
       METHOD.Get,
       undefined,
       Cookies.get("access_token")
