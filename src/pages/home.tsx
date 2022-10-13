@@ -6,6 +6,7 @@ import $ from "jquery";
 import { API_URL, CallApi, METHOD } from "../helpers/call-api";
 import Swal from "sweetalert2";
 import "../css/home.css";
+import { Logout } from "../helpers/logout";
 
 export class Home extends React.Component<any, any> {
   constructor(props: any) {
@@ -161,7 +162,7 @@ export class Home extends React.Component<any, any> {
     $("user").text("");
     for (let user of users) {
       $("#user").append(`<div id=${user.id}></div>`);
-      if (!user.avatarUrl) {
+      if (!user.avatar_url) {
         $(`#${user.id}`).append(
           `<img class="avatar" src="../../avatar.png" alt="avatar" />`
         );
@@ -205,7 +206,13 @@ export class Home extends React.Component<any, any> {
     scroll: boolean = false
   ) {
     if (!scroll) {
+      const pre_id = this.getSession().user_id;
       $("#messages").text("");
+      if (pre_id) {
+        $(`#${pre_id}`).removeClass("press");
+      }
+      $(`#${id}`).addClass("press");
+      this.renderAvatar(id);
     }
 
     this.setState({ userId: id });
@@ -254,6 +261,42 @@ export class Home extends React.Component<any, any> {
     }
   }
 
+  async renderAvatar(id: string) {
+    const response = await CallApi(
+      `${API_URL}/api/user/v1/users/id/${id}`,
+      METHOD.Get,
+      undefined,
+      Cookies.get("access_token")
+    );
+    if (response.status !== 200) {
+      await Swal.fire({
+        title: response.data.error_message,
+        icon: "error",
+        timer: 1000,
+      });
+      return;
+    }
+    const user = response.data;
+    $(`#message_avatar`).html("");
+    if (!user.avatar_url) {
+      $(`#message_avatar`).append(
+        `<img src="../../avatar.png" alt="message avatar" id="message_avatar_status"></img>`
+      );
+    }
+
+    if (user.is_online) {
+      $(`#message_avatar`).append(
+        `<img src="../../online.png" alt="online" id="message_status"></img>`
+      );
+    } else {
+      $(`#message_avatar`).append(
+        `<img src="../../offline.png" alt="offline" id="message_status"></img>`
+      );
+    }
+
+    $(`#message_avatar`).append(`<span>${user.name}</span>`);
+  }
+
   render(): React.ReactNode {
     let init = 0;
     return (
@@ -262,8 +305,46 @@ export class Home extends React.Component<any, any> {
           <div className="col-3 p-0">
             <div id="user"></div>
           </div>
-          <div className="col-9 p-0">
+          <div className="col-9 p-0" id="background-status">
+            <div className="row m-0">
+              <div className="col-9" id="message_avatar"></div>
+              <div className="col-2" id="setting_row">
+                <div className="dropleft" id="setting">
+                  <button
+                    className="btn dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    id="setting-button"
+                  >
+                    <img src="../../setting.png" alt="setting-button" />
+                  </button>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <a className="dropdown-item">Change Name</a>
+                    </li>
+                    <li>
+                      <a className="dropdown-item">Change Password</a>
+                    </li>
+                    <li>
+                      <a className="dropdown-item">Update Avatar</a>
+                    </li>
+
+                    <li>
+                      <hr className="dropdown-divider" />
+                    </li>
+                    <li>
+                      <a className="dropdown-item" onClick={Logout}>
+                        Logout
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
             <div
+              className="col-12"
               id="messages"
               onScroll={() => {
                 if (init) {
@@ -285,6 +366,11 @@ export class Home extends React.Component<any, any> {
                   }
                 }}
               ></textarea>
+              <img
+                src="../../send-message.png"
+                alt="send message"
+                id="send-message"
+              />
             </div>
           </div>
         </div>

@@ -1,16 +1,29 @@
 #messages {
   background-image: url(../../public/background.jpg);
-  height: 93vh;
+  height: 83vh;
   overflow: auto;
   margin-left: auto;
   margin-top: auto;
+  padding: 20px;
+}
+
+#input-message {
+  background-color: #e4e4e4;
+  padding: 5px;
+  padding-top: 8px;
 }
 
 #input-message textarea {
   border-radius: 5px;
+  outline: none;
+  width: 90%;
+  padding: 5px;
+  padding-right: 20px;
+  padding-left: 20px;
+  resize: none;
   margin-left: 10px;
-  margin: auto;
-  height: 6vh;
+  background-color: snow;
+  margin-right: 10px;
 }
 
 #message {
@@ -56,17 +69,18 @@
 }
 
 #root {
-  background-color: #f2f2f2;
+  background-color: #f9f9f9;
 }
 
 #user div {
-  width: 90%;
+  width: 100%;
   font-size: large;
   cursor: pointer;
   padding: 10px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  padding-right: 30px;
 }
 
 .avatar {
@@ -99,4 +113,60 @@
 
 #empty img {
   width: 50px;
+}
+
+.press {
+  background-color: #bbe8fb;
+  width: max-content;
+}
+
+#message_avatar {
+  padding: 5px;
+}
+
+#background-status {
+  background-color: aliceblue;
+  border: 1px solid #dcd7c9;
+  padding: 5px;
+}
+
+#message_status {
+  width: 15px;
+  position: relative;
+  right: 25px;
+  top: 20px;
+}
+
+#message_avatar_status {
+  width: 55px;
+  margin-left: 20px;
+  margin-right: 10px;
+}
+
+#message_avatar span {
+  font-size: x-large;
+  font-weight: bold;
+}
+
+#send-message {
+  position: relative;
+  bottom: 13px;
+  left: 10px;
+  cursor: pointer;
+  width: 25px;
+}
+
+#setting-button img {
+  width: 30px;
+}
+
+#setting-button {
+  width: fit-content;
+}
+
+#setting_row {
+  float: right;
+  text-align: right;
+  width: 25%;
+  padding: 5px;
 }
