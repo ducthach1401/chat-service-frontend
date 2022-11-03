@@ -1,5 +1,5 @@
 import { Suspense, memo, lazy } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import {  Switch } from 'react-router-dom';
 import { routes } from './routes';
 import PrivateRoute from './privateRoute';
 import { LoadingFullPage } from '../components';

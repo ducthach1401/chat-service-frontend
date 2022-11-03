@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 // import * as CONSTANTS from 'src/config/constants';
 
 // let isRefreshing = false;
@@ -8,10 +8,11 @@ const AppAPIInstance = axios.create({
   baseURL: `${process.env.REACT_APP_API_URL}`,
 });
 
-AppAPIInstance.defaults.headers.common['Content-Type'] = 'application/json; charset=utf-8';
+AppAPIInstance.defaults.headers.common["Content-Type"] =
+  "application/json; charset=utf-8";
 
 export const setToken = (token: string) => {
-  AppAPIInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  AppAPIInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   // AppAPIInstance.defaults.headers.common['token'] = `${token}`;
 };
 

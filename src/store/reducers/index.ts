@@ -1,8 +1,8 @@
-import { combineReducers } from 'redux';
-import { History } from 'history';
-import { connectRouter } from 'connected-react-router';
+import { combineReducers } from "redux";
+import { History } from "history";
+import { connectRouter } from "connected-react-router";
 
-import { globalReducer, globalState } from './global';
+import { globalReducer, globalState } from "./global";
 
 const createRootReducer = (history: History) => {
   const reducers = combineReducers({
@@ -21,7 +21,7 @@ export interface reducerType {
     };
     action: string;
   };
-  global: globalState,
+  global: globalState;
 }
 
 export default createRootReducer;

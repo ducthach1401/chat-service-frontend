@@ -1,90 +1,89 @@
 @font-face {
-	font-family: 'Arial Rounded MT';
-	src: url('src/assets/fonts/Arial_Rounded_MT.ttf');
+  font-family: "Arial Rounded MT";
+  src: url("src/assets/fonts/Arial_Rounded_MT.ttf");
 }
 body {
-	margin: 0;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	padding: 0;
-	height: 100%;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  height: 100%;
 }
 
 body * {
-	font-family: 'Mulish', sans-serif;
-	/* font-family: 'Montserrat', sans-serif !important; */
+  font-family: "Mulish", sans-serif;
+  /* font-family: 'Montserrat', sans-serif !important; */
 }
 
 #root {
-	height: auto !important; /* real browsers */
-	height: 100%; /* IE6: treaded as min-height*/
-	min-height: 100%; /* real browsers */
-	min-height: 100vh;
+  height: auto !important; /* real browsers */
+  height: 100%; /* IE6: treaded as min-height*/
+  min-height: 100%; /* real browsers */
+  min-height: 100vh;
 }
 
 #root * {
-	font-family: 'Mulish', sans-serif;
-	/* font-family: 'Montserrat', sans-serif; */
+  font-family: "Mulish", sans-serif;
+  /* font-family: 'Montserrat', sans-serif; */
 }
 
-
 #root .material-icons {
-	font-family: 'Material Icons';
+  font-family: "Material Icons";
 }
 
 .material-icons {
-	font-family: 'Material Icons';
-	font-weight: normal;
-	font-style: normal;
-	font-size: 24px; /* Preferred icon size */
-	display: inline-block;
-	line-height: 1;
-	text-transform: none;
-	letter-spacing: normal;
-	word-wrap: normal;
-	white-space: nowrap;
-	direction: ltr;
+  font-family: "Material Icons";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
 
-	/* Support for all WebKit browsers. */
-	-webkit-font-smoothing: antialiased;
-	/* Support for Safari and Chrome. */
-	text-rendering: optimizeLegibility;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
 
-	/* Support for Firefox. */
-	-moz-osx-font-smoothing: grayscale;
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
 
-	/* Support for IE. */
-	font-feature-settings: 'liga';
+  /* Support for IE. */
+  font-feature-settings: "liga";
 }
 
 input:-internal-autofill-selected {
-	background-color: white !important;
+  background-color: white !important;
 }
 
 button.Mui-disabled {
-	opacity: 0.3;
+  opacity: 0.3;
 }
 
 .deAlign {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 th.th-sort {
-	display: flex;
-	align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .text-capitalize {
-	text-transform: capitalize;
+  text-transform: capitalize;
 }
 
 .custom-color-default.Mui-checked svg {
-	fill: #304d95;
+  fill: #304d95;
 }
 
 .color-red {
-	color: #fd5a65;
+  color: #fd5a65;
 }
 
 /* .flag {

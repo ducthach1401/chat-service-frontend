@@ -1,10 +1,9 @@
-import { lazy } from 'react';
-import MenuLeft from 'src/components/MenuLeft';
-import { useState } from 'react';
-import useStyles from './styles';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import { routes } from 'src/routers/routes';
-import { matchRoute } from 'src/helpers';
+import MenuLeft from "src/components/MenuLeft";
+import { useState } from "react";
+import useStyles from "./styles";
+import { Switch } from "react-router-dom";
+import { routes } from "src/routers/routes";
+import { matchRoute } from "src/helpers";
 // import { reducerType } from 'store/reducers';
 // import { useSelector } from 'react-redux'
 
@@ -22,33 +21,37 @@ import { matchRoute } from 'src/helpers';
 // const DesignCourse = lazy(() => import('pages/Courses/DesignCourse'));
 
 const MasterLayout = () => {
-	const [openBtn, setOpenBtn] = useState(false);
-	const classes = useStyles({ openBtn });
+  const [openBtn, setOpenBtn] = useState(false);
+  const classes = useStyles({ openBtn });
 
-	const checkUrl = () => {
-		// to check the url to hide menu
-		const url = window.location.pathname;
+  const checkUrl = () => {
+    // to check the url to hide menu
+    const url = window.location.pathname;
     // return false;
-		return matchRoute(routes.auth.login, url);
-	};
+    return matchRoute(routes.auth.login, url);
+  };
 
-	return (
-		<>
-			{checkUrl() ? <></> : <MenuLeft openBtn={openBtn} setOpenBtn={setOpenBtn} />}
-			<div className={classes.root}>
-				<div className={checkUrl() ? classes.layoutHidden : classes.layout}>
-					<main className={classes.content}>
-						<Switch>
-							{/* <Route exact path={routes.auth.selectStructure} component={SelectStructure} />
+  return (
+    <>
+      {checkUrl() ? (
+        <></>
+      ) : (
+        <MenuLeft openBtn={openBtn} setOpenBtn={setOpenBtn} />
+      )}
+      <div className={classes.root}>
+        <div className={checkUrl() ? classes.layoutHidden : classes.layout}>
+          <main className={classes.content}>
+            <Switch>
+              {/* <Route exact path={routes.auth.selectStructure} component={SelectStructure} />
 							<Route exact path={routes.auth.editProfile} component={EditProfile} /> */}
 
-							{/* Group Courses */}
-							{/* <Route exact path={routes.courseGroup.list} component={ListGroup} />
+              {/* Group Courses */}
+              {/* <Route exact path={routes.courseGroup.list} component={ListGroup} />
 							<Route exact path={routes.courseGroup.add} component={FormCourses} />
 							<Route exact path={routes.courseGroup.edit} component={FormCourses} />
 							<Route exact path={routes.courseGroup.ranking} component={RankingCourses} /> */}
-							{/* Courses */}
-							{/* <Route exact path={routes.courses.list} component={Courses} />
+              {/* Courses */}
+              {/* <Route exact path={routes.courses.list} component={Courses} />
 							<Route exact path={routes.courses.create} component={CreateCourse} />
 							<Route exact path={routes.courses.edit} component={EditCourses} />
 							<Route exact path={routes.courses.attempt.list} component={AttemptList} />
@@ -56,11 +59,11 @@ const MasterLayout = () => {
 							<Route exact path={routes.courses.ranking} component={Ranking} />
 							<Route exact path={routes.courses.design} component={DesignCourse} />
 							<Redirect from={routes.default} to={routes.courses.list} /> */}
-						</Switch>
-					</main>
-				</div>
-			</div>
-		</>
-	);
+            </Switch>
+          </main>
+        </div>
+      </div>
+    </>
+  );
 };
 export default MasterLayout;

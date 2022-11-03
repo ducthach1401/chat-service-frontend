@@ -1,5 +1,5 @@
-import produce from 'immer';
-import * as actions from './actionTypes';
+import produce from "immer";
+import * as actions from "./actionTypes";
 
 export interface globalState {
   messageError: string;
@@ -9,14 +9,14 @@ export interface globalState {
 }
 
 const initial: globalState = {
-  messageError: '',
-  messageSubError: '',
-  messageSuccess: '',
+  messageError: "",
+  messageSubError: "",
+  messageSuccess: "",
   isLoading: false,
 };
 
 export const globalReducer = (state = initial, action: any) =>
-  produce(state, draft => {
+  produce(state, (draft) => {
     switch (action.type) {
       case actions.SET_LOADING_PAGE:
         draft.isLoading = action.payload;
@@ -30,11 +30,12 @@ export const globalReducer = (state = initial, action: any) =>
       case actions.SET_MESSAGE_SUCCESS:
         draft.messageSuccess = action.payload;
         break;
-      default: return draft
+      default:
+        return draft;
     }
   });
 
 const exports = {
-  globalReducer
-}
-export default exports
+  globalReducer,
+};
+export default exports;
